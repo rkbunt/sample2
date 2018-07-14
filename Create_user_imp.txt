@@ -1,0 +1,21 @@
+CREATE TABLESPACE hostnet
+DATAFILE 'E:\oracle\DataFiles\hostnet.dbf' SIZE 2000 M
+LOGGING DEFAULT 
+NOCOMPRESS ONLINE PERMANENT 
+EXTENT MANAGEMENT LOCAL AUTOALLOCATE;
+
+create user hostnet identified by hostnet default tablespace hostnet quota  unlimited  on hostnet;
+
+grant connect,resource,imp_full_database,exp_full_database to hostnet;
+
+grant unlimited tablespace to hostnet;
+
+alter user hostnet  quota 2000M on hostnet;
+
+GRANT ALL PRIVILEGES TO hostnet;
+
+grant dba to hostnet;
+
+Alter database datafile 'E:\oracle\DataFiles\hostnet.dbf' autoextend on maxsize unlimited;
+
+IMP hostnet/hostnet@orcl  FILE = 'D:\Source\CPH\Hostnet\hostnet.dmp' FROMUSER =hostnet TOUSER = hostnet LOG = 'hostnet.txt' FULL=N
